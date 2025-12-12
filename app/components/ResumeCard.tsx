@@ -9,14 +9,35 @@ const ResumeCard = ({ resume: { id, companyName, jobTitle, feedback, imagePath }
 
     useEffect(() => {
         const loadResume = async () => {
-            const blob = await fs.read(imagePath);
-            if(!blob) return;
-            let url = URL.createObjectURL(blob);
-            setResumeUrl(url);
+            if (!imagePath) return;
+
+            // If the image is a public asset (in /images) or an absolute URL, use it directly
+            if (imagePath.startsWith('/') || imagePath.startsWith('http')) {
+                // Use public path directly for local assets
+                if (imagePath.startsWith('/images') || imagePath.startsWith('http')) {
+                    setResumeUrl(imagePath);
+                    return;
+                }
+            }
+
+            // Otherwise attempt to read from the Puter FS; on failure, fall back to the original path
+            try {
+                const blob = await fs.read(imagePath);
+                if (blob) {
+                    const url = URL.createObjectURL(new Blob([blob]));
+                    setResumeUrl(url);
+                    return;
+                }
+            } catch (err) {
+                console.error('Failed to read image from fs, falling back to path:', err);
+            }
+
+            // Fallback
+            setResumeUrl(imagePath);
         }
 
         loadResume();
-    }, [imagePath]);
+    }, [imagePath, fs]);
 
     return (
         <Link to={`/resume/${id}`} className="resume-card animate-in fade-in duration-1000">

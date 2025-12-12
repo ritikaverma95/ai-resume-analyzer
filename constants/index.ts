@@ -28,6 +28,9 @@ export const resumes: Resume[] = [
         score: 90,
         tips: [],
       },
+      overall_rating: 0,
+      tips: [],
+      ats_compatibility: 0
     },
     imageUrl: "",
     resumeUrl: undefined
@@ -60,6 +63,9 @@ export const resumes: Resume[] = [
         score: 90,
         tips: [],
       },
+      overall_rating: 0,
+      tips: [],
+      ats_compatibility: 0
     },
     imageUrl: "",
     resumeUrl: undefined
@@ -92,6 +98,9 @@ export const resumes: Resume[] = [
         score: 90,
         tips: [],
       },
+      overall_rating: 0,
+      tips: [],
+      ats_compatibility: 0
     },
     imageUrl: "",
     resumeUrl: undefined
